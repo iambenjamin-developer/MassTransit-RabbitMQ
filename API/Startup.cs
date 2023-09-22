@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using API.Producers;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +43,7 @@ namespace API
                 });
             });
             services.AddMassTransitHostedService();
-            //services.AddScoped<QueueProducerService>();
+            services.AddScoped<QueueProducerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
