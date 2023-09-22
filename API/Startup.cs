@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,17 @@ namespace API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             });
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) => 
+                {
+                    cfg.Host(Configuration["Rabbitmq:Url"]);
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
+            services.AddMassTransitHostedService();
+            //services.AddScoped<QueueProducerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
