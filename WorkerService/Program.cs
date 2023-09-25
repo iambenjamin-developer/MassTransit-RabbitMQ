@@ -23,6 +23,7 @@ namespace WorkerService
                 {
                     services.AddHostedService<Worker>();
 
+                    //MassTransit configuration - START
                     services.AddMassTransit(x =>
                     {
                         x.AddConsumer<ProductMessageConsumer>();
@@ -41,7 +42,10 @@ namespace WorkerService
                             });
                         });
                     });
+
                     services.AddMassTransitHostedService();
+                    //MassTransit configuration - END
+
                 });
     }
 }
