@@ -1,9 +1,11 @@
+using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WorkerService.Consumers;
 
 namespace WorkerService
 {
@@ -19,6 +21,19 @@ namespace WorkerService
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddHostedService<Worker>();
+
+                    services.AddMassTransit(x =>
+                    {
+                        x.AddConsumer<ProductMessageConsumer>();
+
+                        x.UsingRabbitMq((context, cfg) =>
+                        {
+                            cfg.Host(hostContext.Configuration["Rabbitmq:Url"]);
+                            cfg.ConfigureEndpoints(context);
+                        });
+                    });
+
+                    services.AddMassTransitHostedService(true);
                 });
     }
 }
