@@ -1,33 +1,24 @@
-using MassTransit;
-using WorkerService.Consumers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-try
+namespace WorkerService
 {
-
-    var host = Host.CreateDefaultBuilder(args)
-        .ConfigureServices((hostContext, services) =>
+    public class Program
+    {
+        public static void Main(string[] args)
         {
-            services.AddMassTransit(x =>
-            {
-                x.AddConsumer<ProductMessageConsumer>();
+            CreateHostBuilder(args).Build().Run();
+        }
 
-                x.UsingRabbitMq((context, cfg) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureServices((hostContext, services) =>
                 {
-                    cfg.Host(hostContext.Configuration["Rabbitmq:Url"]);
-                    cfg.ConfigureEndpoints(context);
+                    services.AddHostedService<Worker>();
                 });
-            });
-            services.AddMassTransitHostedService(true);
-        })
-        .Build();
-
-    await host.RunAsync();
-    return 0;
-}
-catch (Exception ex)
-{
-    return 1;
-}
-finally
-{
+    }
 }
