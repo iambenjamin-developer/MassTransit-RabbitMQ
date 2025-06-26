@@ -38,7 +38,7 @@ namespace API
             {
                 x.UsingRabbitMq((context, cfg) => 
                 {
-                    cfg.Host(Configuration["Rabbitmq:Url"]);
+                    cfg.Host(Configuration["RabbitMQ:Url"]);
                     cfg.ConfigureEndpoints(context);
                 });
             });

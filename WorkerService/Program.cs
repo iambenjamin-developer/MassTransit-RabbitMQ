@@ -30,7 +30,7 @@ namespace WorkerService
 
                         x.UsingRabbitMq((context, cfg) =>
                         {
-                            cfg.Host(hostContext.Configuration["Rabbitmq:Url"]);
+                            cfg.Host(hostContext.Configuration["RabbitMQ:Url"]);
                             cfg.ReceiveEndpoint("my-workerservice-subscriber", e =>
                             {
                                 e.UseMessageRetry(r =>
