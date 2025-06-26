@@ -1,4 +1,4 @@
-using GreenPipes;
+//using GreenPipes;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,7 +43,7 @@ namespace WorkerService
                         });
                     });
 
-                    services.AddMassTransitHostedService();
+                    //services.AddMassTransitHostedService();
                     //MassTransit configuration - END
 
                 });

@@ -42,7 +42,7 @@ namespace API
                     cfg.ConfigureEndpoints(context);
                 });
             });
-            services.AddMassTransitHostedService();
+            //services.AddMassTransitHostedService();
             services.AddScoped<QueueProducerService>();
         }
 
